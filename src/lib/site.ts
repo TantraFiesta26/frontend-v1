@@ -11,7 +11,7 @@ export const siteConfig = {
   socials: {
     twitter: "https://twitter.com/tantrafiesta",
     instagram: "https://instagram.com/tantrafiesta",
-    linkedin: "https://linkedin.com/company/tantrafiesta",
+    linkedin: "https://www.linkedin.com/company/tantrafiesta-iiitn/",
     github: "https://github.com/tantrafiesta",
   },
 } as const;

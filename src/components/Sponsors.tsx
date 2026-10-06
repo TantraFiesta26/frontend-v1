@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { CrimeSceneTape } from "@/components/CrimeSceneTape";
+import { FloatingArt } from "@/components/FloatingArt";
 
 interface DossierData {
   caseNo: string;
@@ -15,14 +16,6 @@ const DOSSIERS: DossierData[] = [
   { caseNo: "CASE #02", tier: "POWERED BY", stamp: "CLASSIFIED", code: "TF-PB-02", rotation: 10 },
   { caseNo: "CASE #03", tier: "TECH PARTNER", stamp: "EVIDENCE", code: "TF-TP-03", rotation: -8 },
   { caseNo: "CASE #04", tier: "PLATINUM", stamp: "REDACTED", code: "TF-PL-04", rotation: 13 },
-  { caseNo: "CASE #05", tier: "ASSOCIATE", stamp: "CONFIDENTIAL", code: "TF-AS-05", rotation: -11 },
-  { caseNo: "CASE #06", tier: "INNOVATION", stamp: "UNDER WRAPS", code: "TF-IN-06", rotation: 9 },
-  { caseNo: "CASE #07", tier: "GAMING PARTNER", stamp: "TOP SECRET", code: "TF-GM-07", rotation: -14 },
-  { caseNo: "CASE #08", tier: "MEDIA PARTNER", stamp: "SEALED FILE", code: "TF-MD-08", rotation: 11 },
-  { caseNo: "CASE #09", tier: "CLOUD PARTNER", stamp: "CLASSIFIED", code: "TF-CL-09", rotation: -9 },
-  { caseNo: "CASE #10", tier: "MOBILITY", stamp: "EVIDENCE", code: "TF-MB-10", rotation: 12 },
-  { caseNo: "CASE #11", tier: "COMMUNITY", stamp: "REDACTED", code: "TF-CM-11", rotation: -13 },
-  { caseNo: "CASE #12", tier: "ECOSYSTEM", stamp: "CONFIDENTIAL", code: "TF-EC-12", rotation: 8 },
 ];
 
 const SponsorCard = ({ dossier }: { dossier: DossierData }) => (
@@ -134,19 +127,20 @@ const SponsorCard = ({ dossier }: { dossier: DossierData }) => (
 
 export function Sponsors() {
   return (
-    <section className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat pt-12 md:pt-20 flex flex-col items-center px-4 md:px-8 overflow-hidden">
+    <section id="sponsors" className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat pt-12 md:pt-20 flex flex-col items-center px-4 md:px-8 overflow-hidden">
       <div className="w-full max-w-[1600px] bg-[#FFFF1A] rounded-t-[32px] md:rounded-t-[48px] px-4 md:px-16 pt-16 md:pt-24 pb-16 relative shadow-2xl">
         
         {/* Hovercar Image Box */}
-        <div className="absolute -top-12 md:-top-20 left-4 md:left-12 w-48 md:w-80 z-20">
+        <FloatingArt className="absolute -top-12 left-4 z-20 w-48 md:-top-20 md:left-12 md:w-80">
           <Image
             src="/assets/hovercar.png"
             alt="Hovercar"
             width={320}
             height={240}
+            draggable={false}
             className="w-full h-auto object-contain drop-shadow-xl"
           />
-        </div>
+        </FloatingArt>
 
         {/* Heading */}
         <h2 className="font-tantra text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-black uppercase tracking-tight mb-16 md:mb-24 text-center mt-8 md:mt-0 relative z-10">
@@ -164,35 +158,9 @@ export function Sponsors() {
 
         {/* Grid */}
         <div className="w-full max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 relative z-10">
-          
-          {/* Column 1 */}
-          <div className="flex flex-col gap-4 md:gap-6">
-            <SponsorCard dossier={DOSSIERS[0]} />
-            <SponsorCard dossier={DOSSIERS[1]} />
-            <SponsorCard dossier={DOSSIERS[2]} />
-          </div>
-
-          {/* Column 2 (Offset) */}
-          <div className="flex flex-col gap-4 md:gap-6 mt-8 md:mt-20">
-            <SponsorCard dossier={DOSSIERS[3]} />
-            <SponsorCard dossier={DOSSIERS[4]} />
-            <SponsorCard dossier={DOSSIERS[5]} />
-          </div>
-
-          {/* Column 3 */}
-          <div className="flex flex-col gap-4 md:gap-6">
-            <SponsorCard dossier={DOSSIERS[6]} />
-            <SponsorCard dossier={DOSSIERS[7]} />
-            <SponsorCard dossier={DOSSIERS[8]} />
-          </div>
-
-          {/* Column 4 (Offset) */}
-          <div className="flex flex-col gap-4 md:gap-6 mt-8 md:mt-20">
-            <SponsorCard dossier={DOSSIERS[9]} />
-            <SponsorCard dossier={DOSSIERS[10]} />
-            <SponsorCard dossier={DOSSIERS[11]} />
-          </div>
-
+          {DOSSIERS.map((dossier) => (
+            <SponsorCard key={dossier.caseNo} dossier={dossier} />
+          ))}
         </div>
       </div>
     </section>

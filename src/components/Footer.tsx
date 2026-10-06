@@ -1,53 +1,103 @@
-"use client";
-
-import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { CrimeSceneTape } from "@/components/CrimeSceneTape";
+import { FloatingArt } from "@/components/FloatingArt";
+import { siteConfig } from "@/lib/site";
 
 interface FooterProps {
   variant?: "purple" | "yellow";
 }
 
+function SocialLinks({ isYellow }: { isYellow: boolean }) {
+  const linkClass = `flex h-8 w-8 items-center justify-center rounded-md border transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current ${
+    isYellow
+      ? "border-black/25 bg-black/5 text-[#2b1f5e] hover:bg-[#2b1f5e] hover:text-[#FFFF1A]"
+      : "border-[#FFFF1A]/45 bg-[#FFFF1A]/10 text-[#FFFF1A] hover:border-[#F44383] hover:bg-[#F44383] hover:text-white"
+  }`;
+
+  return (
+    <div className="flex gap-2">
+      <a href={siteConfig.socials.instagram} aria-label="TantraFiesta on Instagram" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
+      </a>
+      <a href={siteConfig.socials.linkedin} aria-label="TantraFiesta on LinkedIn" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
+      </a>
+    </div>
+  );
+}
+
+function FooterDetails({ isYellow }: { isYellow: boolean }) {
+  const accent = isYellow ? "text-black" : "text-[#FFFF1A]";
+  const muted = isYellow ? "text-black/65" : "text-white/70";
+  const divider = isYellow ? "border-black/15" : "border-white/20";
+  const linkClass = `${muted} transition-colors hover:text-[#F44383] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current`;
+
+  return (
+    <div className={`relative z-20 grid w-full grid-cols-1 items-start gap-8 md:grid-cols-[minmax(0,1fr)_minmax(220px,320px)_minmax(0,1fr)] md:gap-8 ${isYellow ? "text-black" : "text-white"}`}>
+      <div className="flex flex-col gap-8">
+        <div>
+          <h2 className="font-tantra text-2xl uppercase tracking-tight md:text-3xl">
+            TANTRAFIESTA 2026
+          </h2>
+          <p className="pointer-events-none relative z-10 mt-1 select-none text-xs font-medium text-[#F44383] blur-sm md:text-sm">
+            ██████: ██████████ ███ ████████
+          </p>
+        </div>
+
+        <nav aria-label="Footer navigation" className={`max-w-[280px] border-t pt-5 ${divider}`}>
+          <h3 className={`font-mono text-[11px] font-bold uppercase tracking-[0.2em] ${accent}`}>
+            Explore
+          </h3>
+          <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium">
+            <a href="#home" className={linkClass}>Home</a>
+            <a href="#about" className={linkClass}>About</a>
+            <a href="#sponsors" className={linkClass}>Sponsors</a>
+            <a href="#gallery" className={linkClass}>Gallery</a>
+          </div>
+        </nav>
+      </div>
+
+      <div className="hidden md:block" aria-hidden="true" />
+
+      <div className="flex flex-col gap-7 md:items-end md:text-right">
+        <div className={`w-full border-t pt-5 md:w-auto md:border-0 md:pt-0 ${divider}`}>
+          <h3 className={`font-mono text-[11px] font-bold uppercase tracking-[0.2em] ${accent}`}>
+            Get in touch
+          </h3>
+          <div className="mt-4 flex flex-col gap-2 text-sm font-medium">
+            <a href="mailto:support@tantrafiesta.in" className="transition-colors hover:text-[#F44383] hover:underline">support@tantrafiesta.in</a>
+            <a href="tel:+918604551326" className="transition-colors hover:text-[#F44383] hover:underline">+91 86045 51326</a>
+          </div>
+        </div>
+
+        <div className="flex w-full items-center justify-between gap-4 md:w-auto md:flex-col md:items-end md:gap-5">
+          <SocialLinks isYellow={isYellow} />
+          <button
+            type="button"
+            disabled
+            className={`pointer-events-none whitespace-nowrap rounded-md border px-3 py-1.5 text-[10px] font-medium ${
+              isYellow
+                ? "border-[#2b1f5e]/35 bg-[#2b1f5e]/5 text-[#2b1f5e]/80"
+                : "border-[#F44383]/55 bg-[#F44383]/10 text-[#F7A4C4]"
+            }`}
+          >
+            Meet Our Developers
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Footer({ variant = "purple" }: FooterProps) {
   const isYellow = variant === "yellow";
-  const headingText = "TANTRAFIESTA 2026";
-  const [isVisible, setIsVisible] = useState(false);
-  const [fallDistance, setFallDistance] = useState(300);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-
-  useEffect(() => {
-    if (containerRef.current && headingRef.current) {
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const headingRect = headingRef.current.getBoundingClientRect();
-      const dist = containerRect.bottom - headingRect.bottom - 48; 
-      setFallDistance(dist);
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5, rootMargin: "0px 0px -100px 0px" }
-    );
-
-    if (headingRef.current) {
-      observer.observe(headingRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   if (isYellow) {
     return (
-      <section className="relative w-full pt-0 pb-12 md:pb-20 flex flex-col items-center px-4 md:px-8">
+      <section id="contact" className="relative w-full pt-0 pb-12 md:pb-20 flex flex-col items-center px-4 md:px-8">
         {/* Yellow Container for Developers Page */}
         <div
-          ref={containerRef}
-          className="relative w-full max-w-[1600px] bg-[#FFFF1A] rounded-[24px] md:rounded-[32px] shadow-2xl pt-16 pb-48 md:pt-20 md:pb-64 px-8 md:px-12 mx-auto text-black min-h-[400px] md:min-h-[500px]"
+          className="relative w-full max-w-[1600px] bg-[#FFFF1A] rounded-[24px] md:rounded-[32px] shadow-2xl pt-16 pb-[280px] md:pt-24 md:pb-12 px-8 md:px-12 mx-auto text-black min-h-[400px] md:min-h-[500px]"
         >
           {/* Top Center Tab in Yellow */}
           <div className="absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 w-48 md:w-64 h-8 md:h-10 bg-[#FFFF1A] flex items-center justify-center">
@@ -89,103 +139,17 @@ export function Footer({ variant = "purple" }: FooterProps) {
             <path d="M 0 60 C 10 60 15 55 20 50 L 45 25 C 50 20 55 20 65 20 L 80 20 C 95 20 100 10 100 0 L 100 60 Z" />
           </svg>
 
-          {/* Content Layout */}
-          <div className="relative z-10 flex flex-col md:flex-row justify-between w-full h-full text-black">
-            {/* Left Column */}
-            <div className="flex flex-col gap-10 md:w-1/3">
-              <div>
-                <h2
-                  ref={headingRef}
-                  className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-wrap text-black"
-                >
-                  {headingText.split("").map((char, idx) => {
-                    const randomRotation = (((idx * 37 + 13) % 100) / 100 - 0.5) * 120;
-                    return (
-                      <span
-                        key={idx}
-                        className={`inline-block origin-center ${isVisible ? "animate-fall-to-bottom" : ""}`}
-                        style={{
-                          animationDelay: `${idx * 0.12}s`,
-                          "--fall-rotation": `${randomRotation}deg`,
-                          "--fall-distance": `${fallDistance}px`,
-                        } as React.CSSProperties}
-                      >
-                        {char === " " ? "\u00A0" : char}
-                      </span>
-                    );
-                  })}
-                </h2>
-                <p className="text-xs md:text-sm font-medium mt-1 relative z-10 text-[#F44383] select-none blur-sm pointer-events-none">
-                  ██████: ██████████ ███ ████████
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-sm md:text-base font-bold text-black mb-3">Quick Links</h3>
-                <div className="flex flex-wrap gap-4 text-xs md:text-sm font-semibold text-black/60 select-none">
-                  <span className="cursor-not-allowed">Home</span>
-                  <span className="cursor-not-allowed">About</span>
-                  <span className="cursor-not-allowed">Events</span>
-                  <span className="cursor-not-allowed">How to reach?</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="flex flex-col gap-10 md:w-1/3 md:items-end mt-12 md:mt-0">
-              {/* Social Icons */}
-              <div className="flex gap-2">
-                <a
-                  href="#"
-                  className="w-6 h-6 md:w-8 md:h-8 bg-[#8B4513] rounded flex items-center justify-center text-white hover:bg-[#A0522D] transition-colors"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-                <a
-                  href="#"
-                  className="w-6 h-6 md:w-8 md:h-8 bg-[#8B4513] rounded flex items-center justify-center text-white hover:bg-[#A0522D] transition-colors"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                </a>
-                <a
-                  href="#"
-                  className="w-6 h-6 md:w-8 md:h-8 bg-[#8B4513] rounded flex items-center justify-center text-white hover:bg-[#A0522D] transition-colors"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
-              </div>
-
-              <div className="md:text-right">
-                <h3 className="text-sm md:text-base font-bold text-black mb-3">Contact Us</h3>
-                <div className="flex flex-col gap-1 text-xs md:text-sm font-semibold text-black">
-                  <a href="mailto:support@tantrafiesta.in" className="hover:underline">support@tantrafiesta.in</a>
-                  <a href="tel:+919992233445" className="hover:underline">+91 99922-33445</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Center Character Image */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[240px] sm:w-[300px] md:w-[400px] z-20 pointer-events-none flex flex-col items-center">
+          <FooterDetails isYellow />
+          <FloatingArt className="footer-mascot absolute inset-x-0 bottom-0 z-10 mx-auto w-full max-w-[240px] md:max-w-[320px]">
             <Image
               src="/assets/distorted_gurl.png"
               alt="Cyberpunk Mascot"
               width={500}
               height={500}
-              className="w-full h-auto object-contain drop-shadow-2xl"
-              priority
+              draggable={false}
+              className="h-auto w-full object-contain drop-shadow-2xl"
             />
-          </div>
-
-          {/* Meet Our Developers Button (Disabled) */}
-          <button 
-            type="button"
-            disabled
-            className="absolute bottom-8 right-8 md:bottom-12 md:right-16 z-30 pointer-events-none bg-[#F44383]/60 text-white/80 font-bold text-[10px] md:text-xs px-4 md:px-6 py-2 md:py-2.5 rounded-md shadow-lg tracking-wide cursor-not-allowed select-none"
-            style={{ fontFamily: '"Futura PT", sans-serif', wordSpacing: "0.15em" }}
-          >
-            Meet Our Developers
-          </button>
+          </FloatingArt>
         </div>
       </section>
     );
@@ -193,13 +157,13 @@ export function Footer({ variant = "purple" }: FooterProps) {
 
   // Original Purple Variant for Landing Page
   return (
-    <section className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat pt-0 pb-12 md:pb-20 flex flex-col items-center px-4 md:px-8 overflow-hidden">
+    <section id="contact" className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat pt-0 pb-12 md:pb-20 flex flex-col items-center px-4 md:px-8 overflow-hidden">
       
       {/* Bottom half of Yellow Container */}
       <div className="relative w-full max-w-[1600px] bg-[#FFFF1A] rounded-b-[32px] md:rounded-b-[48px] px-2 md:px-8 pt-12 md:pt-16 pb-4 md:pb-8 shadow-2xl">
 
         {/* Purple Inner Container */}
-        <div ref={containerRef} className="relative w-full bg-[#2b1f5e] rounded-[24px] md:rounded-[32px] shadow-inner pt-16 pb-48 md:pt-20 md:pb-64 px-8 md:px-12 mx-auto text-white min-h-[400px] md:min-h-[500px]">
+        <div className="relative w-full bg-[#2b1f5e] rounded-[24px] md:rounded-[32px] shadow-inner pt-16 pb-[280px] md:pt-24 md:pb-12 px-8 md:px-12 mx-auto text-white min-h-[400px] md:min-h-[500px]">
           
           {/* Top Center Tab */}
           <div className="absolute -top-8 md:-top-10 left-1/2 -translate-x-1/2 w-48 md:w-64 h-8 md:h-10 bg-[#2b1f5e] flex items-center justify-center">
@@ -221,93 +185,18 @@ export function Footer({ variant = "purple" }: FooterProps) {
             <path d="M 0 60 C 10 60 15 55 20 50 L 45 25 C 50 20 55 20 65 20 L 80 20 C 95 20 100 10 100 0 L 100 60 Z" />
           </svg>
 
-          {/* Content Layout */}
-          <div className="relative z-10 flex flex-col md:flex-row justify-between w-full h-full text-white">
-            
-            {/* Left Column */}
-            <div className="flex flex-col gap-10 md:w-1/3">
-              <div>
-                <h2 ref={headingRef} className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight flex flex-wrap">
-                  {headingText.split("").map((char, idx) => {
-                    const randomRotation = (((idx * 37 + 13) % 100) / 100 - 0.5) * 120; // deterministic rotation between -60 and 60
-                    return (
-                      <span
-                        key={idx}
-                        className={`inline-block origin-center ${isVisible ? "animate-fall-to-bottom" : ""}`}
-                        style={{
-                          animationDelay: `${idx * 0.12}s`,
-                          "--fall-rotation": `${randomRotation}deg`,
-                          "--fall-distance": `${fallDistance}px`
-                        } as React.CSSProperties}
-                      >
-                        {char === " " ? "\u00A0" : char}
-                      </span>
-                    );
-                  })}
-                </h2>
-                <p className="text-xs md:text-sm font-medium mt-1 relative z-10 text-[#F44383] select-none blur-sm pointer-events-none">
-                  ██████: ██████████ ███ ████████
-                </p>
-              </div>
+          <FooterDetails isYellow={false} />
 
-              <div>
-                <h3 className="text-sm md:text-base font-bold text-[#FFFF1A] mb-3">Quick Links</h3>
-                <div className="flex flex-wrap gap-4 text-xs md:text-sm font-semibold text-white/60 select-none">
-                  <span className="cursor-not-allowed">Home</span>
-                  <span className="cursor-not-allowed">About</span>
-                  <span className="cursor-not-allowed">Events</span>
-                  <span className="cursor-not-allowed">How to reach?</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="flex flex-col gap-10 md:w-1/3 md:items-end mt-12 md:mt-0">
-              {/* Social Icons */}
-              <div className="flex gap-2">
-                <a href="#" className="w-6 h-6 md:w-8 md:h-8 bg-[#8B4513] rounded flex items-center justify-center text-white hover:bg-[#A0522D] transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-                <a href="#" className="w-6 h-6 md:w-8 md:h-8 bg-[#8B4513] rounded flex items-center justify-center text-white hover:bg-[#A0522D] transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                </a>
-                <a href="#" className="w-6 h-6 md:w-8 md:h-8 bg-[#8B4513] rounded flex items-center justify-center text-white hover:bg-[#A0522D] transition-colors">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
-              </div>
-
-              <div className="md:text-right">
-                <h3 className="text-sm md:text-base font-bold text-[#FFFF1A] mb-3">Contact Us</h3>
-                <div className="flex flex-col gap-1 text-xs md:text-sm font-semibold">
-                  <a href="mailto:support@tantrafiesta.in" className="hover:underline">support@tantrafiesta.in</a>
-                  <a href="tel:+919992233445" className="hover:underline">+91 99922-33445</a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Center Character Image */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[240px] sm:w-[300px] md:w-[400px] z-20 pointer-events-none flex flex-col items-center">
+          <FloatingArt className="footer-mascot absolute inset-x-0 bottom-0 z-10 mx-auto w-full max-w-[240px] md:max-w-[320px]">
             <Image
               src="/assets/distorted_gurl.png"
               alt="Cyberpunk Mascot"
               width={500}
               height={500}
-              className="w-full h-auto object-contain drop-shadow-2xl"
-              priority
+              draggable={false}
+              className="h-auto w-full object-contain drop-shadow-2xl"
             />
-          </div>
-
-          {/* Meet Our Developers Button (Disabled) */}
-          <button 
-            type="button"
-            disabled
-            className="absolute bottom-8 right-8 md:bottom-12 md:right-16 z-30 pointer-events-none bg-[#F44383]/60 text-white/80 font-bold text-[10px] md:text-xs px-4 md:px-6 py-2 md:py-2.5 rounded-md shadow-lg tracking-wide cursor-not-allowed select-none"
-            style={{ fontFamily: '"Futura PT", sans-serif', wordSpacing: "0.15em" }}
-          >
-            Meet Our Developers
-          </button>
+          </FloatingArt>
 
         </div>
       </div>

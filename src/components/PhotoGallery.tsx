@@ -3,7 +3,7 @@ import { CrimeSceneTape } from "@/components/CrimeSceneTape";
 
 export function PhotoGallery() {
   return (
-    <section className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat py-20 md:py-28 px-4 flex flex-col items-center justify-center overflow-hidden">
+    <section id="gallery" className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat py-20 md:py-28 px-4 flex flex-col items-center justify-center overflow-hidden">
       {/* Crime Scene Tape cutting across the gallery */}
       <CrimeSceneTape
         text="DO NOT ENTER"

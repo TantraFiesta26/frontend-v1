@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-outfit);
   --font-mono: var(--font-geist-mono);
   --font-tantra: "TantraFont", sans-serif;
   --font-regular: "TantraRegular", sans-serif;
@@ -40,10 +40,72 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.floating-art {
+  perspective: 900px;
+  animation: art-float 5s ease-in-out infinite;
+}
+
+.floating-art__tilt {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 220ms ease-out, filter 220ms ease-out;
+  will-change: transform;
+}
+
+.floating-art:hover .floating-art__tilt {
+  transform: translateY(-6px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.035);
+  filter: drop-shadow(0 18px 16px rgb(0 0 0 / 0.2));
+}
+
+.footer-mascot {
+  animation: none;
+}
+
+.footer-mascot .floating-art__tilt {
+  transform-origin: center bottom;
+}
+
+.footer-mascot:hover .floating-art__tilt {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.035);
+}
+
+@keyframes art-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-art {
+    animation: none;
+  }
+
+  .floating-art__tilt,
+  .floating-art:hover .floating-art__tilt {
+    transform: none;
+    transition: none;
+  }
 }
 
 @keyframes marquee {
@@ -74,38 +136,4 @@ body {
   display: flex;
   width: max-content;
   animation: marquee-reverse 35s linear infinite;
-}
-@keyframes fallToBottom {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* ease-in quad/cubic (gravity) */
-  }
-  40% {
-    /* Hits the ground */
-    transform: translateY(var(--fall-distance)) rotate(calc(var(--fall-rotation) * 0.4));
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); /* ease-out cubic (bounce up) */
-  }
-  65% {
-    /* Peak of first bounce (about 30% back up) */
-    transform: translateY(calc(var(--fall-distance) - 120px)) rotate(calc(var(--fall-rotation) * 0.7));
-    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* ease-in (fall again) */
-  }
-  82% {
-    /* Hits ground again */
-    transform: translateY(var(--fall-distance)) rotate(var(--fall-rotation));
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1); /* ease-out (small bounce) */
-  }
-  92% {
-    /* Peak of second bounce (very small) */
-    transform: translateY(calc(var(--fall-distance) - 30px)) rotate(calc(var(--fall-rotation) * 1.1));
-    animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53); /* ease-in */
-  }
-  100% {
-    /* Final rest */
-    transform: translateY(var(--fall-distance)) rotate(var(--fall-rotation));
-  }
-}
-
-.animate-fall-to-bottom {
-  animation: fallToBottom 1.8s forwards;
 }
