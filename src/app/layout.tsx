@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.fullName} | ${siteConfig.institute}`,
+    default: `${siteConfig.fullName} | ${siteConfig.institute} Tech Fest`,
     template: `%s | ${siteConfig.fullName} | ${siteConfig.institute}`,
   },
   description: siteConfig.description,
@@ -25,15 +25,13 @@ export const metadata: Metadata = {
     "TantraFiesta 2026",
     "IIIT Nagpur",
     "technical fest",
-    "hackathons",
-    "robotics",
-    "coding competitions",
-    "workshops",
-    "guest lectures",
+    "TantraFiesta 2026 events",
+    "TantraFiesta previous editions",
   ],
   authors: [{ name: "TantraFiesta Team" }],
   creator: "IIIT Nagpur",
   publisher: "TantraFiesta",
+  applicationName: "TantraFiesta 2026",
   alternates: {
     canonical: "/",
   },
@@ -42,7 +40,7 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.fullName,
-    title: `${siteConfig.fullName} | ${siteConfig.institute}`,
+    title: `${siteConfig.fullName} — The Next Edition | ${siteConfig.institute}`,
     description: siteConfig.description,
     images: [
       {
@@ -55,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.fullName} | ${siteConfig.institute}`,
+    title: `${siteConfig.fullName} — The Next Edition | ${siteConfig.institute}`,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },

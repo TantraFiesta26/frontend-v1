@@ -32,6 +32,9 @@ export function AboutSection() {
               <p>
                 The fest brings together students with different technical interests and encourages them to question established approaches, work with emerging ideas, and apply knowledge in meaningful ways. With every edition, TantraFiesta reflects the evolving nature of technology while staying rooted in its core purpose: to promote technical curiosity, creativity, and a culture of building beyond the obvious.
               </p>
+              <p>
+                The 2026 edition carries that spirit forward from previous editions, including TantraFiesta 2024 and 2025. Its next chapter is on its way.
+              </p>
             </div>
           </div>
         </div>

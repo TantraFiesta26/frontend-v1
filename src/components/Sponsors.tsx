@@ -5,20 +5,20 @@ import { FloatingArt } from "@/components/FloatingArt";
 
 interface DossierData {
   caseNo: string;
-  tier: string;
+  eventName: string;
   stamp: string;
   code: string;
   rotation: number;
 }
 
 const DOSSIERS: DossierData[] = [
-  { caseNo: "CASE #01", tier: "TITLE SPONSOR", stamp: "TOP SECRET", code: "TF-TS-01", rotation: -12 },
-  { caseNo: "CASE #02", tier: "POWERED BY", stamp: "CLASSIFIED", code: "TF-PB-02", rotation: 10 },
-  { caseNo: "CASE #03", tier: "TECH PARTNER", stamp: "EVIDENCE", code: "TF-TP-03", rotation: -8 },
-  { caseNo: "CASE #04", tier: "PLATINUM", stamp: "REDACTED", code: "TF-PL-04", rotation: 13 },
+  { caseNo: "CASE #01", eventName: "The RoboWars", stamp: "TOP SECRET", code: "TF-EV-01", rotation: -12 },
+  { caseNo: "CASE #02", eventName: "CASCADE", stamp: "CLASSIFIED", code: "TF-EV-02", rotation: 10 },
+  { caseNo: "CASE #03", eventName: "The Game Jam", stamp: "EVIDENCE", code: "TF-EV-03", rotation: -8 },
+  { caseNo: "CASE #04", eventName: "Algorithmia", stamp: "REDACTED", code: "TF-EV-04", rotation: 13 },
 ];
 
-const SponsorCard = ({ dossier }: { dossier: DossierData }) => (
+const EventCard = ({ dossier }: { dossier: DossierData }) => (
   <div className="group relative aspect-[4/5] w-full transition-all duration-300 hover:-translate-y-1.5 hover:drop-shadow-[0_16px_28px_rgba(0,0,0,0.5)]">
     {/* Cyberpunk Notched Card Frame */}
     <svg 
@@ -87,10 +87,10 @@ const SponsorCard = ({ dossier }: { dossier: DossierData }) => (
           </svg>
         </div>
 
-        {/* Sponsor Tier & Redacted Bar */}
+        {/* Event name & Redacted Bar */}
         <div className="w-full mt-2 text-center">
-          <div className="text-[9px] sm:text-[10px] md:text-[11px] font-mono text-[#FFFF1A] font-bold tracking-wider uppercase mb-1">
-            {dossier.tier}
+          <div className="text-[9px] sm:text-[10px] md:text-[11px] font-mono text-[#FFFF1A] font-bold tracking-wider mb-1">
+            {dossier.eventName}
           </div>
           <div className="inline-flex items-center justify-center bg-black/90 border border-white/15 px-2.5 py-0.5 rounded font-mono text-[9px] sm:text-[10px] text-[#E7137D] tracking-widest select-none shadow-inner">
             ███████████
@@ -125,9 +125,9 @@ const SponsorCard = ({ dossier }: { dossier: DossierData }) => (
   </div>
 );
 
-export function Sponsors() {
+export function EventsTeaser() {
   return (
-    <section id="sponsors" className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat pt-12 md:pt-20 flex flex-col items-center px-4 md:px-8 overflow-hidden">
+    <section id="events" className="relative w-full bg-[#241A4C] bg-[url('/assets/bg.png')] bg-cover bg-center bg-no-repeat pt-12 md:pt-20 flex flex-col items-center px-4 md:px-8 overflow-hidden">
       <div className="w-full max-w-[1600px] bg-[#FFFF1A] rounded-t-[32px] md:rounded-t-[48px] px-4 md:px-16 pt-16 md:pt-24 pb-16 relative shadow-2xl">
         
         {/* Hovercar Image Box */}
@@ -144,10 +144,10 @@ export function Sponsors() {
 
         {/* Heading */}
         <h2 className="font-tantra text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-black uppercase tracking-tight mb-16 md:mb-24 text-center mt-8 md:mt-0 relative z-10">
-          OUR SPONSORS
+          EVENTS IN MOTION
         </h2>
 
-        {/* Crime Scene Tape across Sponsors */}
+        {/* Crime Scene Tape across Events */}
         <CrimeSceneTape
           text="CONFIDENTIAL"
           angle={-1.5}
@@ -159,7 +159,7 @@ export function Sponsors() {
         {/* Grid */}
         <div className="w-full max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 relative z-10">
           {DOSSIERS.map((dossier) => (
-            <SponsorCard key={dossier.caseNo} dossier={dossier} />
+            <EventCard key={dossier.caseNo} dossier={dossier} />
           ))}
         </div>
       </div>

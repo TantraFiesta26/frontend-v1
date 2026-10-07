@@ -10,6 +10,7 @@ export function Hero() {
 
       <div className="relative min-h-0 w-full flex-1 overflow-hidden">
         <div className="absolute inset-x-0 top-[24%] z-20 flex h-[38%] items-center justify-center px-4 drop-shadow-2xl">
+          <h1 className="sr-only">TantraFiesta 2026 — IIIT Nagpur National Technical Festival</h1>
           <Image
             src="/assets/tf_hero.png"
             alt="Tantra Fiesta"

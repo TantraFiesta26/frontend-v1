@@ -51,7 +51,7 @@ function FooterDetails({ isYellow }: { isYellow: boolean }) {
           <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm font-medium">
             <a href="#home" className={linkClass}>Home</a>
             <a href="#about" className={linkClass}>About</a>
-            <a href="#sponsors" className={linkClass}>Sponsors</a>
+            <a href="#events" className={linkClass}>Events</a>
             <a href="#gallery" className={linkClass}>Gallery</a>
           </div>
         </nav>
