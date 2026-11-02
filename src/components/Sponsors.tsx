@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { HoverTilt } from "./HoverTilt";
 import { Reveal } from "./Reveal";
+import { SponsorsPageContent } from "./sponsors/SponsorsPageContent";
 
 export interface SponsorItem {
   name: string;
@@ -197,15 +198,5 @@ export function Sponsors() {
 
 // Current sponsors section for the /sponsors route
 export function CurrentSponsors({ headingTag = "h1" }: { headingTag?: "h1" | "h2" }) {
-  return (
-    <SponsorsSection
-      title={
-        <>
-          SP<span className="ml-[0.02em]">O</span><span className="ml-[0.02em]">N</span>SORS
-        </>
-      }
-      headingTag={headingTag}
-      sponsors={currentSponsorsData}
-    />
-  );
+  return <SponsorsPageContent headingTag={headingTag} />;
 }
