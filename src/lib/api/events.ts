@@ -10,6 +10,7 @@
  */
 
 import { formatMealsLabel } from "@/lib/eventDetails";
+import { ARCHIVED } from "../archive";
 
 export interface EventClubReference {
   name: string;
@@ -183,6 +184,7 @@ function normaliseBackendEvent(raw: BackendEvent): PublicEvent {
 }
 
 export const BACKEND_API_BASE =
+  ARCHIVED ? "" :
   process.env.BACKEND_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
   "";

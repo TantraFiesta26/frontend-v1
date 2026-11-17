@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
+import { ARCHIVED } from './src/lib/archive';
 
-if (process.env.NODE_ENV === 'production') {
+if (!ARCHIVED && process.env.NODE_ENV === 'production') {
   const required = ['NEXT_PUBLIC_SITE_URL', 'NEXT_PUBLIC_API_URL', 'BACKEND_API_URL'] as const;
   const missing = required.filter(key => !process.env[key]?.trim());
   if (missing.length) throw new Error(`Missing frontend production configuration: ${missing.join(', ')}`);
@@ -21,6 +22,14 @@ if (process.env.NODE_ENV === 'production') {
 
 const nextConfig: NextConfig = {
   distDir: process.env.NEXT_BUILD_DIR || '.next',
+  async redirects() {
+    if (!ARCHIVED) return [];
+    // Keep the original pages and integrations dormant behind archive redirects.
+    return ['register', 'merch', 'login', 'forgot-password', 'reset-password',
+      'verify-email', 'auth', 'profile', 'admin', 'meal-scanner'].map(route => ({
+      source: `/${route}/:path*`, destination: '/', permanent: false,
+    }));
+  },
   images: {
     remotePatterns: [
       {

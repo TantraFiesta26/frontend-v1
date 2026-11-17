@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 import "lenis/dist/lenis.css";
 import { ParticipantSession } from "@/components/auth/ParticipantSession";
+import { ARCHIVED } from "@/lib/archive";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -180,7 +181,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <SmoothScroll />
         <PageOpeningAnimation />
-        <ParticipantSession>{children}</ParticipantSession>
+        {ARCHIVED ? children : <ParticipantSession>{children}</ParticipantSession>}
       </body>
     </html>
   );
